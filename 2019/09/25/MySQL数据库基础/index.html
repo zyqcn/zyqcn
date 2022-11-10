@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cow.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cow.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SQL,DDL,DML,DQL,">
+
+
+
+
+
+
+
+
+
+
+<meta name="keywords" content="SQL,DDL,DML,DQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库基础">
+<meta property="og:url" content="http://www.plowcow.cn/2019/09/25/MySQL数据库基础/index.html">
+<meta property="og:site_name" content="奋斗的牛">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-25T05:51:35.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库基础">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.plowcow.cn/2019/09/25/MySQL数据库基础/">
+
+
+
+
+
+  <title>数据库基础 | 奋斗的牛</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">奋斗的牛</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">每一步前行都是收获.</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.plowcow.cn/2019/09/25/MySQL数据库基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="奋斗的牛">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/cow.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奋斗的牛">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">数据库基础</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-25T13:53:16+08:00">
+                2019-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<a id="more"></a>
+<h1 id="今日内容"><a href="#今日内容" class="headerlink" title="今日内容"></a>今日内容</h1><h2 id="数据库的基本概念"><a href="#数据库的基本概念" class="headerlink" title="数据库的基本概念"></a>数据库的基本概念</h2><ul>
+<li>数据库的英文单词: <code>DateBase</code> 简称 : <code>DB</code></li>
+<li>什么是数据库?<ul>
+<li>用来储存和管理数据的仓库.</li>
+</ul>
+</li>
+<li>数据库的特点:<ul>
+<li>持久的存储数据.其实数据库就是一个文件系统</li>
+<li>方便存储和管理数据</li>
+<li>使用了统一的方式操作数据库 —<code>SQL</code></li>
+</ul>
+</li>
+<li>常见的数据库软件–参考文档</li>
+</ul>
+<h2 id="MySQL数据库软件"><a href="#MySQL数据库软件" class="headerlink" title="MySQL数据库软件"></a><code>MySQL</code>数据库软件</h2><ul>
+<li>安装<ul>
+<li>参见文档</li>
+</ul>
+</li>
+<li>卸载<ul>
+<li>去<code>mysql</code>的安装目录找到<code>my.ini</code>文件</li>
+<li>复制<code>datadir = ...</code>去文件夹找</li>
+<li>卸载<code>MySQL</code></li>
+</ul>
+</li>
+<li>配置<ul>
+<li><code>MySQL</code>服务启动<ul>
+<li>手动</li>
+<li><code>cmd</code>窗口建立一个命令,<code>services.msc</code></li>
+<li><code>cmd</code>使用管理员权限打开<code>cmd</code><ul>
+<li><code>net start mysql</code>启动<code>mysql</code>服务</li>
+<li><code>net stop mysql</code> 关闭<code>mysql</code>服务</li>
+</ul>
+</li>
+<li><code>MySQL</code>登录<ul>
+<li><code>mysql -uroot -proot</code></li>
+<li><code>mysql -hip地址 -uroot -p</code>链接目标密码</li>
+<li><code>mysql --host=IP</code>地址<code>--user=root --password=root</code></li>
+</ul>
+</li>
+<li><code>MySQL</code>退出<ul>
+<li><code>exit</code></li>
+<li><code>quit</code></li>
+<li>配置文件<code>my.ini</code></li>
+<li><code>MySQL</code>数据目录<ul>
+<li>几个概念<ul>
+<li>数据库: 文件夹</li>
+<li>表: 文件</li>
+<li>数据: 数据</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a><code>SQL</code></h1><ul>
+<li><p>什么是<code>SQL</code>?</p>
+<ul>
+<li><code>Structured Query Language</code> : 结构化查询语言</li>
+<li>其实就是定义了操作所有关系型数据库的规则.每一种数据库操作的方式存在不一样的地方,成为”方言”</li>
+</ul>
+</li>
+<li><p><code>SQL</code>通用语法</p>
+<ul>
+<li><code>SQL</code>语句可以单行或多行书写,以分号结尾.</li>
+<li>可以使用空格和缩进增进可读性</li>
+<li><code>MySQL</code>数据库的<code>SQL</code>语句不区分大小写,关键字建议大写</li>
+<li>3种注释<ul>
+<li>单行注释: – 注释内容 或 # 注释内容(<code>MySQL</code>特有)</li>
+<li>多行注释/* 注释*/</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>SQL</code>分类</p>
+<ul>
+<li><code>DDL</code>:(操作数据库表)</li>
+<li><code>DML</code>:(增删改表中的数据)</li>
+<li><code>DQL</code>:(查询表中的数据)</li>
+<li><code>DCL</code>:(授权–了解一下)        </li>
+</ul>
+</li>
+</ul>
+<h2 id="DDL操作数据库-表"><a href="#DDL操作数据库-表" class="headerlink" title="DDL操作数据库.表"></a><code>DDL</code>操作数据库.表</h2><ul>
+<li><p>操作数据库: <code>CRUD</code></p>
+<ul>
+<li><p><code>C(Create)</code>:创建</p>
+<ul>
+<li><code>create database</code> 数据库名称</li>
+<li><code>create database if not exists</code>判断数据库名称是否存在</li>
+<li><code>create  database</code> 数据库名称 <code>character set</code> 字符集名</li>
+<li>创建数据库判断是否有字符<code>gbk</code><ul>
+<li><code>create database if not exists db</code>4 <code>haracter set gbk;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>R(Retrieve)</code>:查询</p>
+<ul>
+<li>:查看数据库的名称<ul>
+<li><code>show databases;</code></li>
+</ul>
+</li>
+<li>:查看对应数据库的字符集 <ul>
+<li><code>show create database mysql</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>U(Update)</code>:修改</p>
+<ul>
+<li>修改数据库的字符集<ul>
+<li><code>alter database</code>数据库名称<code>character set</code>字符集名称</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>D(Delete)</code>:删除</p>
+<ul>
+<li><code>drop database</code> 数据库名称;</li>
+<li><code>drop database if exists</code> 数据库名称 : 判断数据库是否存在在进行删除语法不会报错</li>
+</ul>
+</li>
+<li><p>使用数据库</p>
+<ul>
+<li>查询当前正在使用的数据库名称<ul>
+<li>`select database();</li>
+</ul>
+</li>
+<li>使用数据库<ul>
+<li><code>use</code> 数据库名称</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>操作表</p>
+<ul>
+<li><code>C(Create)</code>:创建 <ul>
+<li>语法:<ul>
+<li><code>create table</code>表名(<pre><code>列名1 数据类型1,
+列名2 数据类型2,
+...
+列名n 数据类型n</code></pre>  );</li>
+<li>注意: 最后一列不需要加’逗号’(,)</li>
+<li>数据类型: <ul>
+<li><code>int</code>类型<ul>
+<li>age int,</li>
+</ul>
+</li>
+<li><code>double</code>: 小数类型<ul>
+<li><code>score double</code>(5.2) 小数类型</li>
+</ul>
+</li>
+<li>日期类型 <code>date</code> 只包含年月日, <code>yyyy-MM-dd</code></li>
+<li><code>datetime</code> 日期 包含年月日时分秒 <code>yyyy-MM-dd HH:mm:ss</code></li>
+<li><code>timestamp</code>时间错类型 包含年月日时分秒 <code>yyyy-MM-dd HH:mm:ss</code><ul>
+<li>如果将来不给这个字段赋值,或赋值为<code>null</code>则默认系统默认时间,来自动赋值</li>
+</ul>
+</li>
+<li><code>varchar</code>:字符串类型<ul>
+<li><code>name varchar</code>(20):姓名最大20个字符 –&gt;<code>zhangsan</code> 8个字符–张三 两个字符</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>创建表<ul>
+<li><code>create table student(</code><br>  <code>id int,</code><br>  <code>name varchar(32),</code><br>  <code>age int,</code><br>  <code>score double(4,1),</code><br>  <code>birthday date,</code><br>  <code>insert_time timestamp</code><br><code>);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>R(Retrieve)</code>:查询<ul>
+<li>查询某个数据库中所有的名称<ul>
+<li><code>show tables</code></li>
+</ul>
+</li>
+<li>查询表结构<ul>
+<li><code>desc</code>表名;</li>
+</ul>
+</li>
+<li>复制表:<ul>
+<li><code>create table</code> 表名 <code>like</code> 需要复制的表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>U(Update)</code>:修改<ul>
+<li>修改表名<ul>
+<li><code>alter table</code> 表名 <code>rename to</code> 新的表名</li>
+</ul>
+</li>
+<li>修改表的字符集<ul>
+<li><code>alter table</code> 表名 <code>charactor set</code> 字符集名称</li>
+</ul>
+</li>
+<li>添加 一列<ul>
+<li><code>alter table</code> 表名 <code>add</code> 列名 数据类型;</li>
+</ul>
+</li>
+<li>修改列的名称和类型<ul>
+<li><code>alter table</code> 表名 <code>change gender</code> 新列名 新数据类型;</li>
+<li><code>alter table</code>表名 <code>modify</code> 新表明 数据类型;</li>
+</ul>
+</li>
+<li>删除列<ul>
+<li><code>alter table</code> 表名 <code>drop</code> 列名;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>D(Delete)</code>:删除<ul>
+<li><code>drop table</code> 表名;</li>
+<li><code>drop table if exists</code>  表名 ;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>客户端图形化的工具: <code>SQLYOg</code>;</p>
+</li>
+</ul>
+<h2 id="DML-增删改表中的数据-重点"><a href="#DML-增删改表中的数据-重点" class="headerlink" title="DML:增删改表中的数据(重点)"></a><code>DML</code>:增删改表中的数据(重点)</h2><ul>
+<li>添加数据:<ul>
+<li>语法:<ul>
+<li><code>insert into</code> 表名(列名1,列名2,…列名n) <code>values</code>(值1,值2,…值n);</li>
+<li>注意事项:<ul>
+<li>列名和值要一一对应;</li>
+<li>如果表名后不定义列名,则默认给所有列添加值</li>
+<li>除了数字类型,其他类型需要使用引号’’ 或 “” 引起来</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>删除数据:<ul>
+<li>语法:<ul>
+<li><code>delete from</code> 表名 [<code>where</code> 条件]</li>
+</ul>
+</li>
+<li>注意:<ul>
+<li>不加条件将删除表中的所有记录<ul>
+<li><code>delete from</code> 表名; –不推荐 有多少条记录就汇之星多少次删除操作.</li>
+<li><code>truncate table</code>表名 –推荐使用,先删除表,然后在创建一张一模一样的表. </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>修改数据:<ul>
+<li>语法:<ul>
+<li><code>update</code>表名<code>set</code>列名1 = 值1,列名2 = 值2,…[<code>while</code> 条件]</li>
+</ul>
+</li>
+<li>注意:<ul>
+<li>如果不加任何条件将会将表中所有记录全部修改</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="DQL-查询表中的记录"><a href="#DQL-查询表中的记录" class="headerlink" title="DQL: 查询表中的记录"></a><code>DQL</code>: 查询表中的记录</h2><ul>
+<li><p><code>select</code> *<code>from</code>表名</p>
+</li>
+<li><p>语法:</p>
+<ul>
+<li><code>select</code> <pre><code>字段名列表</code></pre>  <code>from</code><pre><code>表名列表</code></pre>  <code>where</code><pre><code>条件列表</code></pre>  <code>group</code><pre><code>分组字段</code></pre>  <code>having</code><pre><code>分组之后的条件</code></pre>  <code>order by</code><pre><code>排序</code></pre>  <code>limit</code><pre><code>分页限定</code></pre></li>
+</ul>
+</li>
+<li><p>基础查询</p>
+<ul>
+<li>多个字段查询<ul>
+<li><code>select</code> 字段名1，字段名2，…<code>from</code> 表明</li>
+<li>注意:<ul>
+<li>如果使用所有字段可以使用* 替换所有字段列表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>去除重复<ul>
+<li><code>distinct</code></li>
+</ul>
+</li>
+<li>计算列<ul>
+<li>一般可以使用四则用算来计算列的值（一般只会进行数值型计算）<ul>
+<li><code>ifnull</code>(表达式1，表达式2，)：<ul>
+<li>表达式1： 那个字段要判断是否为<code>null</code></li>
+<li>表达式2：如果该字段为null后的替换值</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>起别名<ul>
+<li><code>as</code>名字 也可以空格加取得名字</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>条件查询</p>
+<ul>
+<li><code>where</code> 字句后跟条件</li>
+<li>运算符：<ul>
+<li><blockquote>
+<p>、&lt;、&lt;=、&gt;=、=、&lt;&gt;</p>
+</blockquote>
+</li>
+<li><code>BETWEEN...AND</code></li>
+<li><code>iN</code>(集合)</li>
+<li><code>LIKE</code> ‘张%’  —-&gt;  后期用的会多一下<ul>
+<li>占位符：<ul>
+<li>_单个任意字符</li>
+<li>%多个任意字符</li>
+<li>– 查询班级里面姓马的？<br><code>select * from stu where name like &#39;马%&#39;;</code></li>
+</ul>
+  – 查询第二个字是化的人<br>  <code>select * from stu where name like &#39;_化%&#39;;</code><br>  – 查询姓名是3个字的人<br>  <code>select * from stu where name like &#39;___&#39;;</code><br>  – 查询姓名中包含马的人<br>  <code>select * from stu where name like &#39;%马%&#39;;</code></li>
+</ul>
+</li>
+<li><code>IS NULL</code></li>
+<li><code>and</code> 或 &amp;&amp;</li>
+<li><code>or</code> 或 ||</li>
+<li><code>not</code> 或 !</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/WeChat.png" alt="奋斗的牛 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="奋斗的牛 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SQL/" rel="tag"># SQL</a>
+          
+            <a href="/tags/DDL/" rel="tag"># DDL</a>
+          
+            <a href="/tags/DML/" rel="tag"># DML</a>
+          
+            <a href="/tags/DQL/" rel="tag"># DQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/25/基础加强笔记/" rel="next" title="基础加强">
+                <i class="fa fa-chevron-left"></i> 基础加强
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/17/JDBC学习笔记/" rel="prev" title="JDBC">
+                JDBC <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/cow.png" alt="奋斗的牛">
+            
+              <p class="site-author-name" itemprop="name">奋斗的牛</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/hiPlowCow" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-globe"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#今日内容"><span class="nav-number">1.</span> <span class="nav-text">今日内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的基本概念"><span class="nav-number">1.1.</span> <span class="nav-text">数据库的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL数据库软件"><span class="nav-number">1.2.</span> <span class="nav-text">MySQL数据库软件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL"><span class="nav-number">2.</span> <span class="nav-text">SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DDL操作数据库-表"><span class="nav-number">2.1.</span> <span class="nav-text">DDL操作数据库.表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DML-增删改表中的数据-重点"><span class="nav-number">2.2.</span> <span class="nav-text">DML:增删改表中的数据(重点)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DQL-查询表中的记录"><span class="nav-number">2.3.</span> <span class="nav-text">DQL: 查询表中的记录</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">奋斗的牛</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
